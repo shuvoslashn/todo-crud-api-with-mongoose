@@ -1,9 +1,20 @@
 const express = require(`express`);
 const mongoose = require(`mongoose`);
-const app = express();
-const port = 5000;
+require('dotenv').config();
 
+// express app initialization
+const app = express();
 app.use(express.json());
+const port = process.env.PORT || 5000;
+
+// database connection with mongoose
+mongoose
+    .connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log(`connection successful`))
+    .catch((err) => console.log(err));
 
 // default error handler
 const errorHandler = (err, req, res, next) => {
